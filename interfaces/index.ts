@@ -41,9 +41,28 @@ export interface PropertyProps{
   image: string;
   discount: string;
   description: string;
+  reviews: ReviewProps[];
 }
 
+export interface FeaturePillProps{
+  text: string;
+  icon: string;
+  alt?: string;
+}
 
+export interface AmenityIconRenderer{
+  iconString: string;
+  width?: number;
+  height?: number;
+  className?: string;
+}
+
+export interface ReviewProps {
+  avatar: string;
+  name: string;
+  rating: number;
+  comment: string;
+}
 
 
 

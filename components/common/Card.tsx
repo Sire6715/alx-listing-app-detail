@@ -3,14 +3,16 @@ import React from "react";
 import { PropertyProps } from "@/interfaces";
 import Image from "next/image";
 import { icons } from "@/constants";
+import Link from "next/link";
 
 const Card = ({ property }: { property: PropertyProps[] }) => {
   return (
     <div className="font-semibold w-full grid grid-cols-1 md:grid-cols-2 md: md:justify-between md:gap-7  xl:gap-y-15 xl:gap-x-12 lg:grid-cols-2 xl:grid-cols-4 gap-y-7 py-4 ">
-      {property.map((prop, index) => (
-        <div
+      {property.map((prop) => (
+        <Link
           className="py-4 flex flex-col justify-between align-baseline w-full bg-white md:w-full"
-          key={index}
+          key={prop.name}
+          href={`property/${prop.name}`}
         >
           <Image
             src={prop.image}
@@ -20,7 +22,7 @@ const Card = ({ property }: { property: PropertyProps[] }) => {
             style={{ width: "100%", height: "20rem" }}
             className="rounded-[16.5px]  object-cover"
           />
-          <div className="my-4">
+          <div className="my-4 whitespace-nowrap overflow-scroll no-scrollbar">
             {prop.category.map((cat, idx) => (
               <span
                 key={idx}
@@ -87,7 +89,7 @@ const Card = ({ property }: { property: PropertyProps[] }) => {
               </p>
             </div>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );

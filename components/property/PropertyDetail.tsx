@@ -1,47 +1,241 @@
 import { PropertyProps } from "@/interfaces/index";
 import Image from "next/image";
+import { Quicksand } from "next/font/google";
+import { icons } from "@/constants";
+import FeaturePill from "../common/FeaturePill";
+import { useState } from "react";
+import Amenties from "../common/Amenties";
+import ReviewSection from "./ReviewSection";
+import BookingSection from "./BookingSection";
+import Link from "next/link";
+
+const quicksand = Quicksand({
+  subsets: ["latin"],
+  variable: "--font-quicksand",
+});
 
 const PropertyDetail: React.FC<{ property: PropertyProps }> = ({
   property,
 }) => {
+  const [isOpen, setIsOpen] = useState(true);
+
+  const spaceDescription = (listItem: string): string => {
+    return property.description.slice(
+      property.description.indexOf(listItem),
+      property.description.indexOf(listItem) + listItem.length
+    );
+  };
+
+  type SectionedBullets = {
+    [section: string]: string[];
+  };
+
+  const extractSections = (description: string): SectionedBullets => {
+    const spaceSection = description.split("The space")[1] || "";
+    const lines = spaceSection.split("\n").map((line) => line.trim());
+
+    const sections: SectionedBullets = {};
+    let currentSection = "";
+
+    for (const line of lines) {
+      if (line === "") continue;
+
+      // If it's a section title
+      if (!line.startsWith("•")) {
+        currentSection = line;
+        sections[currentSection] = [];
+      }
+
+      // If it's a bullet point
+      if (line.startsWith("•") && currentSection) {
+        sections[currentSection].push(line.replace(/^•\s*/, ""));
+      }
+    }
+
+    return sections;
+  };
+
+  const sections = extractSections(property.description);
+
+  const description = property.description.slice(
+    0,
+    property.description.indexOf("The space")
+  );
+
+  const averageRating =
+    property.reviews.reduce((sum, review) => sum + review.rating, 0) /
+    property.reviews.length;
+
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-4xl font-bold">{property.name}</h1>
-      <div className="flex items-center space-x-2 mt-2">
-        <span className="text-yellow-500">{property.rating} stars</span>
-        <span>
-          {property.address.city}, {property.address.country}
-        </span>
+    <div className={`${quicksand.className} `}>
+      <div className="flex flex-col-reverse">
+        {/* Property Header */}
+        <div className="py-5 px-4 flex flex-col space-y-2">
+          {/* Property Name */}
+          <h1 className="text-[22px] font-bold text-black">{property.name}</h1>
+          <div className="flex items-start space-x-6">
+            {/* Rating and Location */}
+            <div className="flex items-center whitespace-nowrap overflow-hidden no-scrollbar space-x-4">
+              <span className="text-black   font-semibold flex items-baseline text-[11px]">
+                <Image
+                  src={icons.star}
+                  alt="star icon"
+                  width={12}
+                  height={12}
+                  className="mr-1"
+                />
+                {averageRating.toFixed(2)}
+                <span className="text-[#929292] text-[11px] font-light">
+                  {" "}
+                  {`(${property.reviews.length} reviews)`}
+                </span>
+              </span>
+              <div className="text-[#929292] text-[11px] flex gap-1 items-baseline">
+                <Image
+                  src={icons.location}
+                  alt={icons.location}
+                  width={12}
+                  height={12}
+                />
+                <span>
+                  {property.address.city}, {property.address.country}
+                </span>
+              </div>
+              {/*host*/}
+              <div className="flex gap-2 items-baseline">
+                <Image
+                  src={icons.profile1}
+                  alt={icons.profile1}
+                  height={12}
+                  width={12}
+                />
+                <span className="text-[#929292] text-[11px]">Mainstream</span>
+              </div>
+            </div>
+          </div>
+          {/*Features*/}
+          <div className="flex gap-6 align-middle items-center">
+            <FeaturePill
+              icon={icons.bed}
+              alt={icons.bed}
+              text={`${property.offers.bed} Bedrooms`}
+            />
+            <FeaturePill
+              icon={icons.bathtub}
+              alt={icons.bathtub}
+              text={`${property.offers.shower} Bathroom`}
+            />
+            <FeaturePill
+              icon={icons.people}
+              alt={icons.people}
+              text={`${property.offers.occupants} guests`}
+            />
+          </div>
+        </div>
+
+        {/* Image Grid */}
+        <div className="grid grid-cols-2 gap-4 mt-4">
+          <Image
+            src={property.image}
+            alt={property.name}
+            width={800} // Adjust based on your layout
+            height={384} // h-96 = 384px (96 * 4)
+            className="col-span-2 w-full h-96 object-cover "
+          />{" "}
+          {/* Add more images */}
+        </div>
       </div>
 
-      {/* Image Grid */}
-      <div className="grid grid-cols-2 gap-4 mt-4">
-        <Image
-          src={property.image}
-          alt={property.name}
-          width={800} // Adjust based on your layout
-          height={384} // h-96 = 384px (96 * 4)
-          className="col-span-2 w-full h-96 object-cover rounded-lg"
-        />{" "}
-        {/* Add more images */}
-      </div>
+      <div className="grid grid-cols-1 md:grid-cols-8 gap-7">
+        <div className="md:col-span-6">
+          <div className="">
+            <ul className="  mt-4 ul_border text-[#929292] text-[17px] overflow-scroll no-scrollbar  whitespace-nowrap text-2xl font-semibold  flex justify-between md:justify-around  md:w-2/3 w-full gap-8 ">
+              <li className="mb-3 pl-5">
+                Description
+              </li>
+              <li className="mb-3"><Link href={"/ReviewSection"}>What we offer</Link></li>
+              <li className="mb-3">Reviews</li>
+              <li className="mb-3">About host</li>
+            </ul>
 
-      {/* Description */}
-      <div className="mt-4">
-        <h2 className="text-2xl font-semibold">Description</h2>
-        <p>{property.description}</p>
-      </div>
+            {/* Description */}
+            <div className={isOpen ? "line-clamp-6" : ""}>
+              <p className="text-black pt-4 px-6 text-[18px] leading-[30px]">
+                {description}
+              </p>
+              <p className="text-black px-6 font-semibold text-[18px] mt-6 mb-0.5">
+                {spaceDescription("The space")}
+              </p>
+              {Object.entries(sections).map(([sectionTitle, bullets]) => (
+                <div key={sectionTitle} className="mb-4 px-6">
+                  <h3 className="text-black text-[18px] ">{sectionTitle}</h3>
+                  <ul className="list-disc pl-6 text-gray-800 space-y-1">
+                    {bullets.map((bullet, i) => (
+                      <li key={i}>{bullet}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={() => setIsOpen((prev) => !prev)}
+              className="px-6 flex align-baseline items-center gap-3 font-medium text-[#34967C] text-[18px]"
+            >
+              {isOpen ? "Read more" : "Show less"}
+              <Image
+                src={icons.arrow_right}
+                alt={icons.arrow_right}
+                height={20}
+                width={20}
+              />{" "}
+            </button>
+          </div>
 
-      {/* Amenities */}
-      <div className="mt-4">
-        <h2 className="text-2xl font-semibold">What this place offers</h2>
-        <ul className="flex flex-wrap space-x-4">
-          {property.category.map((amenity, index) => (
-            <li key={index} className="bg-gray-200 p-2 rounded-md">
-              {amenity}
-            </li>
-          ))}
-        </ul>
+          {/* Amenities */}
+          <div className="mt-1 px-6">
+            <h1 className="text-2xl font-semibold">What this place offers</h1>
+            <h2 className="text-black font-bold text-[20px] leading-[35px]">
+              What this place offer
+            </h2>
+            <p className="text-black text-[16px] my-7">
+              Each home is fully equipped to meet your needs, with ample space
+              and privacy.
+            </p>
+            {property.category.map((amenity, index) => (
+              <span
+                key={index}
+                className="flex align-baseline text-[22.09px] items-center gap-4 m-4"
+              >
+                <Amenties iconString={amenity} width={20} height={20} />
+                <p className="text-black text-[16.05px]">{amenity}</p>
+              </span>
+            ))}
+            <div className="mt-18">
+              <span className="text-black font-semibold flex items-baseline text-[22px]">
+                <Image
+                  src={icons.star}
+                  alt="star icon"
+                  width={16}
+                  height={16}
+                  className="mr-1"
+                />
+                <p>{averageRating.toFixed(2)}</p>
+                <span className="text-[#929292] text-[22px] font-bold">
+                  {" "}
+                  {`(${property.reviews.length} reviews)`}
+                </span>
+              </span>
+              {/* Reviews */}
+              <div className="">
+                <ReviewSection reviews={property.reviews} />
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Booking session */}
+        <div className=" md:col-span-2">
+          <BookingSection price={property.price} discount={property.discount} />
+        </div>
       </div>
     </div>
   );

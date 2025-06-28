@@ -7,6 +7,7 @@ import { Quicksand } from "next/font/google";
 import Hero from "@/components/common/Hero";
 import { Button } from "@/components/common/Button";
 
+
 const quicksand = Quicksand({
   subsets: ["latin"],
   variable: "--font-quicksand",
@@ -47,8 +48,12 @@ export default function Home() {
     setItem(updatedCategories.length ? newItems : PROPERTYLISTINGSAMPLE);
   };
 
+
+
+  
+
   return (
-    <div className={quicksand.className}>
+    <div className={`px-[1.3rem] ${quicksand.className}`}>
       <div className="Hero w-full flex justify-center items-center">
         <Hero />
       </div>
@@ -65,7 +70,7 @@ export default function Home() {
         />
       </div>
 
-      <div className="">
+      <div>
         <Card property={item} />
       </div>
       <div className = "h-[10rem] md:h-[25rem] xl:h-[15rem] flex flex-col items-center mb-[11rem] justify-end">
