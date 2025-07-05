@@ -2,7 +2,7 @@ import { AmenityIconRenderer } from "@/interfaces";
 import { amenityIconsMap } from "@/constants";
 import Image from "next/image";
 
-export const AmentityIcons = ({
+export const Amenties = ({
   iconString,
   width = 24,
   height = 24,
@@ -23,4 +23,4 @@ export const AmentityIcons = ({
        />
   )}; 
 
-export default AmentityIcons;
+export default Amenties;

@@ -15,6 +15,11 @@ export const icons = {
   arrow_right: "/assets/Icons/Linear/Arrows/Arrow_Right.svg",
   location: "/assets/Icons/Bold/Map&Location/Map_Point.svg",
   profile1: "/assets/Icons/Profile1.svg",
+  share: "/assets/Icons/Share.svg",
+  heart: "/assets/Icons/Linear/Like/Vector.svg",
+  heartRed: "/assets/Icons/Linear/Like/red-heart-icon.svg",
+  arrowleft: "/assets/Icons/Linear/Arrows/Vector.svg",
+  discount: "/assets/Icons/Subtract.svg",
 };
 
 export const amenityIconsMap: Record<string, string> = {

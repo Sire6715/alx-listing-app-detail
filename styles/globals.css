@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -8,8 +8,8 @@
 }
 
 @theme inline {
-  --font-geist-sans: 'Source Sans 3', sans-serif;
-  --font-geist-mono: 'Source Code Pro', monospace;
+  --font-geist-sans: "Source Sans 3", sans-serif;
+  --font-geist-mono: "Source Code Pro", monospace;
 }
 
 @theme inline {
@@ -21,7 +21,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground: #FFFFFF;
+    --foreground: #ffffff;
   }
 }
 
@@ -32,37 +32,64 @@ body {
 }
 
 .font-Quicksand {
-  font-family:  "Quicksand", sans-serif;
+  font-family: "Quicksand", sans-serif;
 }
 
 .pill_style {
-  border: 1.09px solid #E9E9E9;
+  border: 1.09px solid #e9e9e9;
 }
 
 .ul_border {
-  border-bottom: 1.09px solid #E9E9E9;
+  border-bottom: 1.09px solid #e9e9e9;
 }
 
-.pill_style:hover{
-  border: 1.09px solid #34967C
+.pill_style:hover {
+  border: 1.09px solid #34967c;
 }
 
-
-.pill_active{
-  border: 1.09px solid #34967C
+.pill_active {
+  border: 1.09px solid #34967c;
 }
 
-.pill_active:active{
-  border: 1.09px solid #34967C
+.pill_active:active {
+  border: 1.09px solid #34967c;
 }
 
+.discount {
+  border-radius: 3.40282e38px 3.40282e38px 3.40282e38px 0px;
+  top: 37px;
+  left: -5px;
+}
 
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
-  .no-scrollbar { 
+  .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+}
+
+.list-nav {
+  position: relative;
+  width: max-content;
+}
+
+.list-nav::after {
+  content: "";
+  background: #34967c;
+  height: 6px;
+  width: 100%;
+  position: absolute;
+  bottom: -14px;
+  left: 0;
+  transition: width 0.3s ease-in-out;
+}
+
+input[type="date"] {
+  border: 1px solid #e9e9e9;
+  border-radius: 10px;
+  font-weight: 300;
+  font-family: "Arial", sans-serif;
 }

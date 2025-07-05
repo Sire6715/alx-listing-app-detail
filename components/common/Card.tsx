@@ -7,10 +7,10 @@ import Link from "next/link";
 
 const Card = ({ property }: { property: PropertyProps[] }) => {
   return (
-    <div className="font-semibold w-full grid grid-cols-1 md:grid-cols-2 md: md:justify-between md:gap-7  xl:gap-y-15 xl:gap-x-12 lg:grid-cols-2 xl:grid-cols-4 gap-y-7 py-4 ">
+    <div className="font-semibold  w-full grid grid-cols-1 md:grid-cols-2 md: md:justify-between md:gap-7  xl:gap-y-15 xl:gap-x-12 lg:grid-cols-2 xl:grid-cols-4 gap-y-7 py-4 ">
       {property.map((prop) => (
         <Link
-          className="py-4 flex flex-col justify-between align-baseline w-full bg-white md:w-full"
+          className="py-4 flex flex-col relative  justify-between align-baseline w-full bg-white md:w-full"
           key={prop.name}
           href={`property/${prop.name}`}
         >
@@ -32,6 +32,17 @@ const Card = ({ property }: { property: PropertyProps[] }) => {
               </span>
             ))}
           </div>
+          {prop.discount && (
+            <span className="bg-[#2cc39b] shadow-2xl gap-2 flex  items-center justify-center px-2 py-1 discount absolute">
+              <Image
+                src={icons.discount}
+                alt={icons.discount}
+                height={16}
+                width={16}
+              />
+              <h1>{`${prop.discount}% Off`}</h1>
+            </span>
+          )}
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-[22.67px] font-semibold mb-1 text-black font-Quicksand">
               {prop.name}
@@ -84,7 +95,7 @@ const Card = ({ property }: { property: PropertyProps[] }) => {
 
             <div>
               <p className="text-2xl text-black font-bold">
-                ${prop.price.toLocaleString( )}
+                ${prop.price.toLocaleString()}
                 <span className="text-sm">/n</span>
               </p>
             </div>

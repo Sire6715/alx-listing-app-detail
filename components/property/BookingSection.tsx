@@ -49,7 +49,7 @@ const BookingSection: React.FC<{ price: number; discount?: string }> = ({
   }, [selectedStartDate, selectedEndDate]);
 
   return (
-    <div className="bg-white  p-6 shadow-md rounded-lg mr-10">
+    <div className="bg-white  p-6 shadow-md rounded-lg md:mr-10">
       <h3 className="text-xl font-semibold text-black">${price}/night</h3>
       <div className="mt-4">
         <label className="text-black font-bold">Check-in</label>
@@ -57,7 +57,7 @@ const BookingSection: React.FC<{ price: number; discount?: string }> = ({
           type="date"
           value={selectedStartDate}
           onChange={HandleStartDayChange}
-          className="border  p-2 rounded-lg outline-[#929292] text-[#929292] font-bold w-full mt-2"
+          className="border  p-2 outline-[#929292] text-[#929292] font-bold w-full mt-2"
         />
       </div>
       <div className="mt-4">
@@ -66,7 +66,7 @@ const BookingSection: React.FC<{ price: number; discount?: string }> = ({
           type="date"
           value={selectedEndDate}
           onChange={HandleEndDateChange}
-          className="border text-[#929292] font-bold p-2 w-full mt-2"
+          className="border text-[#929292] font-bold p-2 w-full mt-2 placeholder-gray-400::placeholder"
         />
       </div>
 
